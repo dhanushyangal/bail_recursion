@@ -1,0 +1,21 @@
+Name,Age,Gender,Offense_Type,Previous_Convictions,Community_Ties,Flight_Risk,Bail_Amount_Suggested,Employment_Status,Family_Dependants,Criminal_History_Severity,Bail_Granted
+John Doe,32,male,violent,1,strong,0,10000,employed,2,medium,1
+Jane Smith,45,female,economic,3,weak,1,5000,unemployed,0,high,0
+Alex Johnson,28,male,cybercrime,0,strong,0,7000,employed,1,low,1
+Mary Lee,38,female,drug-related,2,strong,1,12000,unemployed,3,high,0
+Michael Brown,50,male,violent,5,weak,1,15000,unemployed,4,high,0
+Lisa White,27,female,economic,0,strong,0,8000,employed,0,low,1
+Kevin Davis,31,male,cybercrime,2,weak,1,9000,unemployed,1,medium,0
+Anna Harris,22,female,drug-related,1,strong,0,6000,employed,1,medium,1
+Robert Wilson,40,male,economic,4,weak,1,11000,unemployed,3,high,0
+Emily Clark,35,female,violent,2,strong,0,13000,employed,2,medium,1
+Charles King,29,male,cybercrime,1,weak,1,9500,unemployed,2,medium,0
+Jessica Young,33,female,drug-related,3,strong,1,10000,employed,2,high,0
+Brian Scott,44,male,violent,0,strong,0,12000,employed,3,low,1
+Sophia Mitchell,26,female,economic,1,strong,0,7500,employed,0,low,1
+James Walker,37,male,drug-related,2,weak,1,11000,unemployed,4,medium,0
+Laura Martinez,30,female,violent,3,strong,1,10000,employed,1,high,0
+Henry Allen,48,male,cybercrime,1,weak,0,7000,unemployed,1,medium,1
+Olivia Lewis,28,female,drug-related,0,strong,0,6000,employed,2,low,1
+George Baker,42,male,economic,2,weak,1,9000,unemployed,3,medium,0
+Chloe Phillips,24,female,violent,1,strong,0,8000,employed,0,medium,1

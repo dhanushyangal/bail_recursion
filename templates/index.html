@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bail Prediction</title>
+</head>
+<body>
+    <h1>Bail Prediction Form</h1>
+    <form id="bailForm">
+        <label>Defendant Name: <input type="text" name="name" id="name"></label><br>
+        <button type="button" onclick="getDetails()">Get Details</button>
+        <div id="defendantDetails" style="display: none;">
+            <p><strong>Age:</strong> <span id="age"></span></p>
+            <p><strong>Gender:</strong> <span id="gender"></span></p>
+            <p><strong>Offense Type:</strong> <span id="offense_type"></span></p>
+            <p><strong>Previous Convictions:</strong> <span id="previous_convictions"></span></p>
+            <p><strong>Community Ties:</strong> <span id="community_ties"></span></p>
+            <p><strong>Flight Risk:</strong> <span id="flight_risk"></span></p>
+            <p><strong>Bail Amount Suggested:</strong> <span id="bail_amount_suggested"></span></p>
+            <p><strong>Employment Status:</strong> <span id="employment_status"></span></p>
+            <p><strong>Family Dependents:</strong> <span id="family_dependants"></span></p>
+            <p><strong>Criminal History Severity:</strong> <span id="criminal_history_severity"></span></p>
+        </div>
+        <button type="submit">Predict Bail Eligibility</button>
+    </form>
+
+    <h2 id="result"></h2>
+
+    <script>
+        function getDetails() {
+            const name = document.getElementById('name').value;
+            fetch('/get_details', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ name: name })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    document.getElementById('age').textContent = data.Age;
+                    document.getElementById('gender').textContent = data.Gender;
+                    document.getElementById('offense_type').textContent = data.Offense_Type;
+                    document.getElementById('previous_convictions').textContent = data.Previous_Convictions;
+                    document.getElementById('community_ties').textContent = data.Community_Ties;
+                    document.getElementById('flight_risk').textContent = data.Flight_Risk;
+                    document.getElementById('bail_amount_suggested').textContent = data.Bail_Amount_Suggested;
+                    document.getElementById('employment_status').textContent = data.Employment_Status;
+                    document.getElementById('family_dependants').textContent = data.Family_Dependants;
+                    document.getElementById('criminal_history_severity').textContent = data.Criminal_History_Severity;
+                    document.getElementById('defendantDetails').style.display = 'block';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        document.getElementById('bailForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ name: name })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    document.getElementById('result').textContent = data.bail_eligibility ? 'Bail Granted' : 'Bail Denied';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
