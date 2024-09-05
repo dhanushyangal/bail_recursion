@@ -20,10 +20,12 @@
         }
         h1 {
             text-align: center;
+            margin-bottom: 20px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 20px; /* Space below the table */
         }
         table, th, td {
             border: 1px solid #ddd;
@@ -36,14 +38,26 @@
             background-color: #f2f2f2;
         }
         button {
-            background-color: #4CAF50;
+            background-color: #007BFF;
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px; /* Space above the button */
         }
         button:hover {
+            background-color: #0056b3;
+        }
+        .home-button {
+            text-decoration: none;
+        }
+        .submit-button {
+            background-color: #007BFF;
+            margin-top: 10px;
+        }
+        .submit-button:hover {
             background-color: #0056b3;
         }
     </style>
@@ -69,7 +83,17 @@
                 <td>{{ result['reason_for_bail_denial'] }}</td>
             </tr>
         </table>
-        <a href="/" class="home-button"><button>Home</button></a>
+        <a href="/" class="home-button">
+            <button>Home</button>
+        </a>
+        <form action="/submit_to_judge" method="post">
+            <input type="hidden" name="name" value="{{ result['name'] }}">
+            <input type="hidden" name="bail_eligibility" value="{{ result['bail_eligibility'] }}">
+            <input type="hidden" name="reason" value="{{ result['reason'] }}">
+            <input type="hidden" name="release_section" value="{{ result['release_section'] }}">
+            <input type="hidden" name="reason_for_bail_denial" value="{{ result['reason_for_bail_denial'] }}">
+            <button type="submit" class="submit-button">Submit to Judge</button>
+        </form>
     </div>
 </body>
 </html>
