@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bail Prediction Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bail Prediction Result</h1>
+        <table>
+            <tr>
+                <th>Bail Eligibility</th>
+                <td>{{ result['bail_eligibility'] }}</td>
+            </tr>
+            <tr>
+                <th>Reason</th>
+                <td>{{ result['reason'] }}</td>
+            </tr>
+            <tr>
+                <th>Release Section</th>
+                <td>{{ result['release_section'] }}</td>
+            </tr>
+            <tr>
+                <th>Reason for Bail Denial</th>
+                <td>{{ result['reason_for_bail_denial'] }}</td>
+            </tr>
+        </table>
+        <a href="/" class="home-button"><button>Home</button></a>
+    </div>
+</body>
+</html>

@@ -8,15 +8,23 @@ import joblib
 # Load dataset
 data = pd.read_csv('bail_decision_data.csv')
 
+# Handle missing values
+data.fillna({
+    'Release_Section': 'Unknown',
+    'Reason_for_Bail_Denial': 'Not Applicable'
+}, inplace=True)
+
 # Encode categorical variables
 label_encoders = {}
-for column in ['Gender', 'Offense_Type', 'Community_Ties', 'Employment_Status', 'Criminal_History_Severity']:
+feature_columns = ['Gender', 'Offense_Type', 'Community_Ties', 'Employment_Status', 'Criminal_History_Severity', 'Release_Section']
+
+for column in feature_columns:
     label_encoders[column] = LabelEncoder()
-    data[column] = label_encoders[column].fit_transform(data[column])
+    data[column] = label_encoders[column].fit_transform(data[column].astype(str))
 
 # Split features and labels
-X = data.drop(columns=['Name', 'Bail_Granted'])  # Features (excluding 'Name' and 'Bail_Granted')
-y = data['Bail_Granted']  # Label
+X = data[feature_columns]
+y = data['Bail_Granted']
 
 # Train-test split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -26,7 +34,7 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
-# Model development (Random Forest)
+# Model development
 model = RandomForestClassifier(random_state=42)
 model.fit(X_train, y_train)
 

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defendant Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px; /* Add space between buttons */
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Defendant Details</h1>
+        <table>
+            <tr>
+                <th>Name</th>
+                <td>{{ details['Name'] }}</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>{{ details['Gender'] }}</td>
+            </tr>
+            <tr>
+                <th>Offense Type</th>
+                <td>{{ details['Offense_Type'] }}</td>
+            </tr>
+            <tr>
+                <th>Community Ties</th>
+                <td>{{ details['Community_Ties'] }}</td>
+            </tr>
+            <tr>
+                <th>Employment Status</th>
+                <td>{{ details['Employment_Status'] }}</td>
+            </tr>
+            <tr>
+                <th>Criminal History Severity</th>
+                <td>{{ details['Criminal_History_Severity'] }}</td>
+            </tr>
+            <tr>
+                <th>Release Section</th>
+                <td>{{ details['Release_Section'] }}</td>
+            </tr>
+            <tr>
+                <th>Reason for Bail Denial</th>
+                <td>{{ details['Reason_for_Bail_Denial'] }}</td>
+            </tr>
+        </table>
+        <form action="/predict" method="post">
+            <input type="hidden" name="name" value="{{ details['Name'] }}">
+            <button type="submit">Show Bail Result</button>
+        </form>
+        <a href="/" style="text-decoration: none;">
+            <button>Home</button>
+        </a>
+    </div>
+</body>
+</html>
