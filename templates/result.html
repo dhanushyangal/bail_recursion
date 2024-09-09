@@ -7,58 +7,57 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
             background-color: #f4f4f4;
+            margin: 0;
+            padding: 40px 20px;
         }
         .container {
             max-width: 800px;
-            margin: 0 auto;
             background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 0 auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
             text-align: center;
-            margin-bottom: 20px;
+            color: #333;
+            margin-bottom: 30px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px; /* Space below the table */
+            margin-bottom: 30px;
         }
         table, th, td {
             border: 1px solid #ddd;
         }
         th, td {
-            padding: 10px;
+            padding: 12px;
             text-align: left;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #f8f8f8;
+            font-weight: bold;
         }
         button {
             background-color: #007BFF;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 18px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            margin-top: 20px; /* Space above the button */
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
         }
         button:hover {
             background-color: #0056b3;
         }
         .home-button {
-            text-decoration: none;
-        }
-        .submit-button {
-            background-color: #007BFF;
-            margin-top: 10px;
-        }
-        .submit-button:hover {
-            background-color: #0056b3;
+            text-align: center;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -83,10 +82,12 @@
                 <td>{{ result['reason_for_bail_denial'] }}</td>
             </tr>
         </table>
-        <a href="/" class="home-button">
-            <button>Home</button>
-        </a>
-        <form action="/submit_to_judge" method="post">
+        <div class="home-button">
+            <a href="/" style="text-decoration:none;">
+                <button>Go to Home</button>
+            </a>
+        </div>
+        <form action="/submit_to_judge" method="POST">
             <input type="hidden" name="name" value="{{ result['name'] }}">
             <input type="hidden" name="bail_eligibility" value="{{ result['bail_eligibility'] }}">
             <input type="hidden" name="reason" value="{{ result['reason'] }}">

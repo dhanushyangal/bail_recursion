@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judge Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 50px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button.reject {
+            background-color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <h1>Judge Dashboard</h1>
+    <h2>Submitted Bail Requests</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Lawyer Name</th>
+                <th>Bail Eligibility</th>
+                <th>Release Section</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+            <tr>
+                <td>{{ request.name }}</td>
+                <td>{{ request.bail_eligibility }}</td>
+                <td>{{ request.release_section }}</td>
+                <td>{{ request.status }}</td>
+                <td>
+                    {% if request.status == 'Pending' %}
+                    <form action="/judge_review" method="POST" style="display: inline;">
+                        <input type="hidden" name="index" value="{{ loop.index0 }}">
+                        <button type="submit" name="action" value="approve">Approve</button>
+                    </form>
+                    <form action="/judge_review" method="POST" style="display: inline;">
+                        <input type="hidden" name="index" value="{{ loop.index0 }}">
+                        <button type="submit" class="reject" name="action" value="reject">Reject</button>
+                    </form>
+                    {% else %}
+                    <span>{{ request.status }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
