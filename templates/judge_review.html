@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judge Review</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .details {
+            margin-bottom: 20px;
+        }
+        .details label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        .details p {
+            margin: 5px 0;
+            padding: 8px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .lawyer-report {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .lawyer-report a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .lawyer-report a:hover {
+            background-color: #0056b3;
+        }
+        .decision-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .approve-btn, .reject-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #fff;
+        }
+        .approve-btn {
+            background-color: #28a745;
+        }
+        .reject-btn {
+            background-color: #dc3545;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        .eligibility {
+            margin-top: 20px;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .eligible {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .not-eligible {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Judge Review: Bail Request</h1>
+
+        <div class="details">
+            <label>Defendant Name:</label>
+            <p>{{ request_details['name'] }}</p>
+
+            <label>Offense Type (Release Section):</label>
+            <p>{{ request_details['release_section'] }}</p>
+
+            <label>Lawyer's Report:</label>
+            <p>{{ request_details['lawyer_report'] }}</p>
+        </div>
+
+        <!-- Bail Eligibility Section -->
+        <div class="eligibility">
+            <h3>Bail Eligibility Status</h3>
+            {% if request_details['bail_eligible'] %}
+                <p class="eligible">The defendant is eligible for bail.</p>
+            {% else %}
+                <p class="not-eligible">The defendant is not eligible for bail.</p>
+            {% endif %}
+        </div>
+
+        <div class="lawyer-report">
+            <h3>View Full Lawyer's Report</h3>
+            <a href="/download_report/{{ index }}" download="bail_report.pdf">Download Report</a>
+        </div>
+
+        <form action="/judge_review/{{ index }}" method="post">
+            <div class="decision-buttons">
+                <button type="submit" name="action" value="approve" class="approve-btn">Approve Bail</button>
+                <button type="submit" name="action" value="reject" class="reject-btn">Reject Bail</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

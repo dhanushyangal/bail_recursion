@@ -3,98 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bail Prediction Result</title>
+    <title>Defendant Details</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 20px;
             background-color: #f4f4f4;
-            margin: 0;
-            padding: 40px 20px;
         }
         .container {
             max-width: 800px;
-            background: #fff;
-            padding: 30px;
             margin: 0 auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
             text-align: center;
-            color: #333;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         table, th, td {
             border: 1px solid #ddd;
         }
         th, td {
-            padding: 12px;
+            padding: 10px;
             text-align: left;
         }
         th {
-            background-color: #f8f8f8;
-            font-weight: bold;
+            background-color: #f2f2f2;
         }
         button {
             background-color: #007BFF;
             color: white;
-            padding: 12px 18px;
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            display: block;
-            width: 100%;
-            margin-bottom: 15px;
+            margin: 10px 5px;
         }
         button:hover {
             background-color: #0056b3;
         }
-        .home-button {
-            text-align: center;
-            margin-bottom: 20px;
+        .report-box {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .report-box textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+        }
+        .upload-section {
+            margin-top: 20px;
+        }
+        .upload-section input[type="file"] {
+            margin-top: 10px;
+        }
+        .pdf-section {
+            margin-top: 20px;
+        }
+        .pdf-box {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+        }
+        .court-selection {
+            margin-top: 20px;
+        }
+        .court-selection select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Bail Prediction Result</h1>
+        <h1>Defendant Details</h1>
         <table>
             <tr>
-                <th>Bail Eligibility</th>
-                <td>{{ result['bail_eligibility'] }}</td>
+                <th>Name</th>
+                <td>{{ result['name'] }}</td>
             </tr>
             <tr>
-                <th>Reason</th>
-                <td>{{ result['reason'] }}</td>
+                <th>Age</th>
+                <td>{{ result['age'] }}</td>
             </tr>
             <tr>
-                <th>Release Section</th>
-                <td>{{ result['release_section'] }}</td>
+                <th>Gender</th>
+                <td>{{ result['gender'] }}</td>
             </tr>
             <tr>
-                <th>Reason for Bail Denial</th>
-                <td>{{ result['reason_for_bail_denial'] }}</td>
+                <th>Duration of Imprisonment</th>
+                <td>{{ result['imprisonment_duration'] }}</td>
             </tr>
         </table>
-        <div class="home-button">
-            <a href="/" style="text-decoration:none;">
-                <button>Go to Home</button>
-            </a>
+
+        <div class="upload-section">
+            <h2>Upload Prisoner Documents</h2>
+            <input type="file" name="pdf_report" accept=".pdf">
         </div>
-        <form action="/submit_to_judge" method="POST">
-            <input type="hidden" name="name" value="{{ result['name'] }}">
-            <input type="hidden" name="bail_eligibility" value="{{ result['bail_eligibility'] }}">
-            <input type="hidden" name="reason" value="{{ result['reason'] }}">
-            <input type="hidden" name="release_section" value="{{ result['release_section'] }}">
-            <input type="hidden" name="reason_for_bail_denial" value="{{ result['reason_for_bail_denial'] }}">
-            <button type="submit" class="submit-button">Submit to Judge</button>
+
+        <div class="court-selection">
+            <h2>Select Court</h2>
+            <select name="court">
+                <option value="high_court">High Court</option>
+                <option value="district_court">District Court</option>
+                <option value="supreme_court">Supreme Court</option>
+                <!-- Add more court options as needed -->
+            </select>
+        </div>
+
+        <form method="POST" action="/submit_to_judge">
+            <input type="text" name="name" value="{{ result.name }}" hidden>
+            <input type="text" name="bail_eligibility" value="{{ result.bail_eligibility }}" hidden>
+            <input type="text" name="release_section" value="{{ result.release_section }}" hidden>
+        
+            <!-- Add this lawyer report input field -->
+            <div class="report-box">
+                <h2>Report</h2>
+                <textarea name="lawyer_report" placeholder="Enter your report here..."></textarea>
+            </div>
+        
+            <button type="submit">Submit to Judge</button>
         </form>
+        
+
+        <a href="/" style="text-decoration: none;">
+            <button>Home</button>
+        </a>
     </div>
+    
 </body>
 </html>
+

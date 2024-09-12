@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Defendant Details</title>
+    <title>Accused Details</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -30,8 +30,13 @@
         table, th, td {
             border: 1px solid #ddd;
         }
-        th, td {
+        th{
             padding: 10px;
+            text-align: left;
+        }
+        td {
+            padding: 10px;
+            padding-right: 200px;
             text-align: left;
         }
         th {
@@ -61,6 +66,10 @@
                 <td>{{ details['Name'] }}</td>
             </tr>
             <tr>
+                <th>Age</th>
+                <td>{{ details['Age'] }}</td>
+            </tr>
+            <tr>
                 <th>Gender</th>
                 <td>{{ details['Gender'] }}</td>
             </tr>
@@ -69,25 +78,41 @@
                 <td>{{ details['Offense_Type'] }}</td>
             </tr>
             <tr>
+                <th>Penal Provisions</th>
+                <td>{{ details['Penal_Provisions'] }}</td>
+            </tr>
+            <tr>
+                <th>Duration of Imprisonment </th>
+                <td>{{ details['Duration_of_Imprisonment_Served'] }}</td>
+            </tr>
+           
+            <tr>
+                <th>Risk of Tampering with Evidence or Witnesses</th>
+                <td>{{ details['Risk_of_Tampering_with_Evidence_or_Witnesses'] }}</td>
+            </tr>
+            <tr>
+                <th>Socio-economic Background</th>
+                <td>{{ details['Socio-economic_Background'] }}</td>
+            </tr>
+            <tr>
                 <th>Community Ties</th>
                 <td>{{ details['Community_Ties'] }}</td>
             </tr>
             <tr>
-                <th>Employment Status</th>
-                <td>{{ details['Employment_Status'] }}</td>
+                <th>Health and Personal Circumstances</th>
+                <td>{{ details['Health_and_Personal_Circumstances'] }}</td>
             </tr>
+            
+            <tr>
+                <th>Judicial Pronouncements</th>
+                <td>{{ details['Judicial_Pronouncements'] }}</td>
+            </tr>
+        
             <tr>
                 <th>Criminal History Severity</th>
                 <td>{{ details['Criminal_History_Severity'] }}</td>
             </tr>
-            <tr>
-                <th>Release Section</th>
-                <td>{{ details['Release_Section'] }}</td>
-            </tr>
-            <tr>
-                <th>Reason for Bail Denial</th>
-                <td>{{ details['Reason_for_Bail_Denial'] }}</td>
-            </tr>
+    
         </table>
         <form action="/predict" method="post">
             <input type="hidden" name="name" value="{{ details['Name'] }}">

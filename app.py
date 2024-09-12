@@ -55,7 +55,9 @@ def lawyer_dashboard():
 @app.route('/judge')
 def judge_dashboard():
     if 'role' in session and session['role'] == 'judge':
-        return render_template('judge_dashboard.html', requests=bail_requests)
+        pending_requests = [r for r in bail_requests if r['status'] == 'Pending']
+        completed_requests = [r for r in bail_requests if r['status'] in ['Approved', 'Rejected']]
+        return render_template('judge_dashboard.html', pending_requests=pending_requests, completed_requests=completed_requests)
     else:
         return redirect(url_for('login'))
 
@@ -105,43 +107,76 @@ def predict():
         reasons['reason'] = 'The defendant does not meet the criteria for bail. Possible reasons: flight risk, serious offense, etc.'
 
     result = {
+        'name': defendant.get('Name', 'N/A'),
+        'age': defendant.get('Age', 'N/A'),
+        'gender': defendant.get('Gender', 'N/A'),
+        'imprisonment_duration': defendant.get('Duration_of_Imprisonment_Served', 'N/A'),
         'bail_eligibility': reasons['bail_eligibility'],
-        'reason': reasons['reason'],
-        'release_section': defendant.get('Release_Section', 'N/A'),
-        'reason_for_bail_denial': defendant.get('Reason_for_Bail_Denial', 'N/A') if prediction == 0 else 'N/A'
+        'reason_for_bail_denial': defendant.get('Reason_for_Bail_Denial', 'N/A') if prediction == 0 else 'N/A',
+        'release_section': defendant.get('Release_Section', 'N/A')
     }
 
     return render_template('result.html', result=result)
 
 @app.route('/submit_to_judge', methods=['POST'])
 def submit_to_judge():
-    name = request.form['name']
-    bail_status = request.form['bail_eligibility']
-    release_section = request.form['release_section']
+    name = request.form.get('name')
+    bail_status = request.form.get('bail_eligibility')
+    release_section = request.form.get('release_section')
+    lawyer_report = request.form.get('lawyer_report')  # Use .get() to avoid KeyError
 
     # Add to bail requests for judge's review
     bail_requests.append({
         'name': name,
         'bail_eligibility': bail_status,
         'release_section': release_section,
+        'lawyer_report': lawyer_report if lawyer_report else 'No report submitted',  # Handle empty report
         'status': 'Pending'
     })
     
     return redirect(url_for('login'))
 
+@app.route('/judge_review/<int:index>', methods=['GET', 'POST'])
+def judge_review(index):
+    # Ensure request method handling and role check
 
-@app.route('/judge_review', methods=['POST'])
-def judge_review():
-    index = int(request.form['index'])
-    action = request.form['action']
-    
-    # Update the request based on judge's decision
-    if action == 'approve':
-        bail_requests[index]['status'] = 'Approved'
-    elif action == 'reject':
-        bail_requests[index]['status'] = 'Rejected'
-    
-    return redirect(url_for('judge_dashboard'))
+    if 'role' in session and session['role'] == 'judge':
+        if request.method == 'POST':
+            action = request.form['action']
+            
+            # Update the request based on judge's decision
+            if action == 'approve':
+                bail_requests[index]['status'] = 'Approved'
+            elif action == 'reject':
+                bail_requests[index]['status'] = 'Rejected'
+            
+            return redirect(url_for('judge_dashboard'))
+        
+        else:  # GET method to display details
+            request_details = bail_requests[index]
+            return render_template('judge_review.html', request_details=request_details, index=index)
+    else:
+        return redirect(url_for('login'))@app.route('/judge_review/<int:index>', methods=['GET', 'POST'])
+def judge_review(index):
+    if 'role' in session and session['role'] == 'judge':
+        if index >= len(bail_requests) or index < 0:
+            return "Request not found", 404  # Return 404 if index is invalid
+
+        if request.method == 'POST':
+            action = request.form['action']
+            if action == 'approve':
+                bail_requests[index]['status'] = 'Approved'
+            elif action == 'reject':
+                bail_requests[index]['status'] = 'Rejected'
+
+            return redirect(url_for('judge_dashboard'))
+
+        else:
+            request_details = bail_requests[index]
+            return render_template('judge_review.html', request_details=request_details, index=index)
+    else:
+        return redirect(url_for('login'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
