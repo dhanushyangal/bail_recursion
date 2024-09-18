@@ -93,10 +93,19 @@ def predict():
         else:
             features.append(0)  # Default value if data is missing
     
-    features = [features]
-    features = scaler.transform(features)
-    prediction = model.predict(features)[0]
+    # Fill missing columns to match the original number of features
+    while len(features) < 12:  # Assuming scaler was trained on 12 features
+        features.append(0)  # Add default values for missing features
     
+    features = [features]  # Reshape for model input
+    
+    # Ensure the number of features matches the scaler's expected input
+    try:
+        features = scaler.transform(features)
+        prediction = model.predict(features)[0]
+    except ValueError as e:
+        return jsonify({'error': f'Error in scaling or prediction: {str(e)}'}), 400
+
     # Build result
     reasons = {}
     if prediction == 1:
