@@ -105,14 +105,14 @@
         </div>
 
         <!-- Bail Eligibility Section -->
-        <div class="eligibility">
-            <h3>Bail Eligibility Status</h3>
-            {% if request_details['bail_eligible'] %}
-                <p class="eligible">The defendant is eligible for bail.</p>
-            {% else %}
-                <p class="not-eligible">The defendant is not eligible for bail.</p>
-            {% endif %}
-        </div>
+<div class="eligibility">
+    <h3>Bail Eligibility Status</h3>
+    {% if request_details['bail_eligibility'] == 'Bail Granted' %}
+        <p class="eligible">The defendant is eligible for bail.</p>
+    {% else %}
+        <p class="not-eligible">The defendant is not eligible for bail.</p>
+    {% endif %}
+</div>
 
         <div class="lawyer-report">
             <h3>View Full Lawyer's Report</h3>

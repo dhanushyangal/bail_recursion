@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyer Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .dashboard {
+            width: 80%;
+            max-width: 1200px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .section {
+            width: 45%;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .gateway-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .gateway-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .status-container {
+            padding: 10px;
+            font-size: 18px;
+            color: #333;
+            background-color: #f9f9f9;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .approved {
+            color: green;
+            font-weight: bold;
+        }
+
+        .pending {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .rejected {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>Lawyer Dashboard</h1>
+    <div class="dashboard">
+
+        <!-- Direct to Lawyer Gateway Section -->
+        <div class="section" id="lawyer-gateway">
+            <h2 class="section-title">Lawyer Gateway</h2>
+            <p>Access tools and submit documents.</p>
+            <a href="/lawyer_gateway" class="gateway-btn">Go to Lawyer Gateway</a>
+        </div>
+
+        <!-- Judge's Bail Decision Section -->
+        <div class="section" id="bail-decision">
+            <h2 class="section-title">Judge's Bail Decision</h2>
+            <p>Bail status of your client:</p>
+            <div class="status-container">
+                <!-- This is where the bail status will be displayed -->
+                <p id="bail-status" class="pending">Waiting for Judge's Decision...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // This section simulates updating the bail status dynamically.
+    // In practice, this could be an AJAX call fetching the status from your server
+    function updateBailStatus() {
+        const statusElement = document.getElementById('bail-status');
+
+        // Simulated status (for example, from a backend response)
+        const bailStatus = 'Approved';  // Can be 'Approved', 'Pending', or 'Rejected'
+
+        if (bailStatus === 'Approved') {
+            statusElement.textContent = 'Bail Approved';
+            statusElement.className = 'approved';
+        } else if (bailStatus === 'Rejected') {
+            statusElement.textContent = 'Bail Rejected';
+            statusElement.className = 'rejected';
+        } else {
+            statusElement.textContent = 'Waiting for Judge\'s Decision...';
+            statusElement.className = 'pending';
+        }
+    }
+
+    // Simulate a status update
+    setTimeout(updateBailStatus, 3000); // Simulate a delay in getting the judge's decision
+</script>
+
+</body>
+</html>
